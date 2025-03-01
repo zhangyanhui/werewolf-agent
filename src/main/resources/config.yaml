@@ -1,5 +1,56 @@
-llm:
-  service: dashscope # dashscope、zhipuai、openai
-  api_key: sk-xxx
-  model_name: qwen-turbo
-  temperature: 0.7
+
+# 新结构：
+llm_services:
+  预言家:
+    service: zhipuai
+    api_key: xxxxx
+    model_name: glm-4-plus
+    temperature: 0.7
+    voice:
+      - sambert-zhinan-v1
+    model_company: 智谱清言
+
+  女巫:
+    service: zhipuai
+    api_key: xxxxxx
+    model_name: glm-4-plus
+    temperature: 0.7
+    voice:
+      - sambert-zhiqi-v1
+    model_company: 智谱清言
+  狼人:
+    service: deepseek
+    api_key: xxxxxx
+    model_name: deepseek-chat
+    temperature: 0.7
+    voice:
+      - sambert-zhichu-v1
+      - sambert-zhide-v1
+      - sambert-zhijia-v1
+    model_company: 深度求索
+  猎人:
+    service: dashscope
+    api_key: xxxxxxxx
+    model_name: qwen-turbo
+    temperature: 0.7
+    voice:
+      - sambert-zhixiang-v1
+    model_company: 阿里云百炼
+  村民:
+    service: dashscope
+    api_key: xxxxxx
+    model_name: qwen-turbo
+    temperature: 0.7
+    voice:
+      - sambert-zhiwei-v1
+      - sambert-zhiming-v1
+      - sambert-zhimo-v1
+    model_company: 阿里云百炼
+  # 其他角色默认配置
+  default:
+    service: dashscope
+    api_key: xxxxx
+    model_name: qwen-turbo
+    temperature: 0.7
+    voice: sambert-pingmin
+    model_company: 阿里云百炼

@@ -20,8 +20,8 @@ public class WitchPlayer extends AbstractPlayer {
     private int saveId = -1; // 昨晚救活的ID
     private int killId = -1; // 昨晚毒死的ID
 
-    public WitchPlayer(int id, String roleName, @NonNull String service, @NonNull String apiKey, String modelName, Double temperature) {
-        super(id, roleName);
+    public WitchPlayer(int id, String roleName, @NonNull String service, @NonNull String apiKey, String modelName, Double temperature,String voice) {
+        super(id, roleName,voice);
         this.role = new WitchRole(service, apiKey, modelName, temperature);
     }
 

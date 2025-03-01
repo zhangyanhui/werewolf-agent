@@ -44,4 +44,5 @@ public interface Player {
      * @return
      */
     String testament() throws GameOverException;
+
 }

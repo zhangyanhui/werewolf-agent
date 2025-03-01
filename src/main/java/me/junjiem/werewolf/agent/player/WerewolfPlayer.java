@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class WerewolfPlayer extends AbstractPlayer {
     private final WerewolfRole role;
 
-    public WerewolfPlayer(int id, String roleName, @NonNull String service, @NonNull String apiKey, String modelName, Double temperature) {
-        super(id, roleName);
+    public WerewolfPlayer(int id, String roleName, @NonNull String service, @NonNull String apiKey, String modelName, Double temperature,String voice) {
+        super(id, roleName,voice);
         this.role = new WerewolfRole(service, apiKey, modelName, temperature);
     }
 

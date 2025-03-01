@@ -27,6 +27,12 @@ public class GameData {
 
     public static boolean goodGuysWin = true; // 是否好人阵营获胜
 
+    //根据角色获取玩家，返回玩家数量
+    public static int getPlayerCountByRole(String roleName) {
+        return (int) players.stream()
+                .filter(p -> p.getRoleName().equals(roleName))
+                .count();
+    }
     public static AbstractPlayer getPlayer(int id) {
         Map<Integer, AbstractPlayer> playerMap = players.stream()
                 .collect(Collectors.toMap(AbstractPlayer::getId, p -> p));
@@ -104,7 +110,7 @@ public class GameData {
                     return str + (StringUtils.isNotBlank(e.getValue()) ? e.getValue() : "\n(第1天还未轮到发言)");
                 })
                 .collect(Collectors.joining("\n\n"));
-        log.info("### 对局信息 ###\n" + gameInformation);
+//        log.info("### 对局信息 ###\n" + gameInformation);
         return gameInformation;
     }
 
@@ -124,6 +130,11 @@ public class GameData {
             goodGuysWin = false;
             throw new GameOverException();
         }
+
     }
+    public static boolean isPlayerDead(int playerId) {
+        return killIds.contains(playerId);
+    }
+
 
 }

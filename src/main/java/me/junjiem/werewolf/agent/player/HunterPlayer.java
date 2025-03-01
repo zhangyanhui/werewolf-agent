@@ -16,8 +16,8 @@ public class HunterPlayer extends AbstractPlayer {
 
     private final HunterRole role;
 
-    public HunterPlayer(int id, String roleName, @NonNull String service, @NonNull String apiKey, String modelName, Double temperature) {
-        super(id, roleName);
+    public HunterPlayer(int id, String roleName, @NonNull String service, @NonNull String apiKey, String modelName, Double temperature,String voice) {
+        super(id, roleName,voice);
         this.role = new HunterRole(service, apiKey, modelName, temperature);
     }
 

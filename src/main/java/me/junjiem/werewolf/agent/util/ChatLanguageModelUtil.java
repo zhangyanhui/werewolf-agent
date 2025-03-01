@@ -7,11 +7,14 @@ import dev.langchain4j.model.dashscope.QwenChatModel;
 import dev.langchain4j.model.dashscope.QwenModelName;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModelName;
+
 import dev.langchain4j.model.zhipu.ZhipuAiChatModel;
 import dev.langchain4j.model.zhipu.chat.ChatCompletionModel;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import me.junjiem.werewolf.agent.bean.SpeakResult;
+import me.junjiem.werewolf.agent.model.DeepSeekLanguageModel;
+import me.junjiem.werewolf.agent.model.QIanfanLanguageModel;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -47,7 +50,19 @@ public class ChatLanguageModelUtil {
                     .modelName(Optional.ofNullable(modelName).orElse(QwenModelName.QWEN_TURBO));
             Optional.ofNullable(temperature).ifPresent(t -> builder.temperature(t.floatValue()));
             return builder.build();
-        } else {
+        }else if ("deepseek".equalsIgnoreCase(service)) {
+            return DeepSeekLanguageModel.builder()
+                    .apiKey(apiKey)
+                    .modelName(modelName)
+                    .temperature(temperature)
+                    .build();
+        } else if ("qianfan".equalsIgnoreCase(service)) {
+            return QIanfanLanguageModel.builder()
+                    .apiKey(apiKey)
+                    .modelName(modelName)
+                    .temperature(temperature)
+                    .build();
+        }  else {
             OpenAiChatModel.OpenAiChatModelBuilder builder = OpenAiChatModel.builder()
                     .apiKey(apiKey)
                     .modelName(Optional.ofNullable(modelName).orElse(OpenAiChatModelName.GPT_3_5_TURBO.toString()));
