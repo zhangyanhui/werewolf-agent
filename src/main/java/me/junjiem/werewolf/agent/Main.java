@@ -6,6 +6,7 @@ import me.junjiem.werewolf.agent.bean.KillResult;
 import me.junjiem.werewolf.agent.player.*;
 import me.junjiem.werewolf.agent.util.GameData;
 import me.junjiem.werewolf.agent.util.TTSPlayer;
+import me.junjiem.werewolf.agent.util.YamlEnvLoader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -32,15 +33,20 @@ public class Main {
     // 移除原有静态变量
     private static final Map<String, Map<String, Object>> llmConfigs;
 
-    static {
-        try (InputStream in = Main.class.getClassLoader().getResourceAsStream("config-pro.yaml")) {
-            Yaml yaml = new Yaml(new Constructor(Map.class));
-            Map<String, Object> config = yaml.load(in);
 
+    static {
+
+        try  {
+            String active = YamlEnvLoader.loadActiveConfig("config.yaml");
+            InputStream in = Main.class.getClassLoader().getResourceAsStream("application-"+active+".yaml");
+
+            Map<String, Object> config = YamlEnvLoader.loadWithEnv(in);
             // 新配置结构读取
             llmConfigs = (Map<String, Map<String, Object>>) config.get("llm_services");
         } catch (IOException e) {
             throw new RuntimeException("Load config.yaml failed.", e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

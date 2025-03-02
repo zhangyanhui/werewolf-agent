@@ -3,9 +3,14 @@ package me.junjiem.werewolf.agent.util;
 import com.alibaba.dashscope.audio.tts.SpeechSynthesisAudioFormat;
 import com.alibaba.dashscope.audio.tts.SpeechSynthesisParam;
 import com.alibaba.dashscope.audio.tts.SpeechSynthesizer;
+import me.junjiem.werewolf.agent.Main;
+
 import javax.sound.sampled.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
 
@@ -13,6 +18,21 @@ public class TTSPlayer {
     private static final Object playLock = new Object();
     private static final int BUFFER_SIZE = 4096;
     private static final Set<String> playingAudios = Collections.synchronizedSet(new HashSet<>());
+    private static final String ttskey;
+    static {
+
+        try  {
+            String active = YamlEnvLoader.loadActiveConfig("config.yaml");
+            InputStream in = Main.class.getClassLoader().getResourceAsStream("application-"+active+".yaml");
+            Map<String, Object> config = YamlEnvLoader.loadWithEnv(in);
+            // 新配置结构读取
+            ttskey = (String) config.get("ttskey");
+        } catch (IOException e) {
+            throw new RuntimeException("Load config.yaml failed.", e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     static class AudioPlayer implements AutoCloseable {
         private final BlockingQueue<byte[]> audioQueue = new LinkedBlockingQueue<>(2000);
         private final SourceDataLine dataLine;
@@ -93,7 +113,7 @@ public class TTSPlayer {
                         .text(text)
                         .sampleRate(48000)
                         .format(SpeechSynthesisAudioFormat.PCM)
-                        .apiKey("your api key")
+                        .apiKey(ttskey)
                         .build();
 
                 synthesizer.streamCall(param)
