@@ -1,4 +1,6 @@
 ttskey: 阿里云的key ，和dashscope处配置的是一个key
+#添加人类玩家开关
+human_player: true
 # 新结构：
 llm_services:
   预言家:

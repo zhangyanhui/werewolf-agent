@@ -8,6 +8,7 @@ import me.junjiem.werewolf.agent.util.GameData;
 import java.util.List;
 
 /**
+ * 女巫角色
  * @Author JunjieM
  * @Date 2024/4/11
  */
@@ -71,5 +72,18 @@ public class WitchPlayer extends AbstractPlayer {
         }
         this.saveId = killId;
         this.elixirs = false;
+    }
+
+    @Override
+    public int skill(String info) {
+        if (!this.poisons) {
+            return -1;
+        }
+        PoisonResult result = role.skill(id, GameData.getGameInformation(), Integer.parseInt(info));
+        if (result.isKill()) {
+            this.killId = result.getKillId();
+            this.poisons = false;
+        }
+        return result.isKill() ? result.getKillId() : -1;
     }
 }

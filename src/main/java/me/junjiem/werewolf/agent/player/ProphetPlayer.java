@@ -9,6 +9,7 @@ import me.junjiem.werewolf.agent.util.GameData;
 import java.util.List;
 
 /**
+ * 预言家角色
  * @Author JunjieM
  * @Date 2024/4/11
  */
@@ -45,7 +46,7 @@ public class ProphetPlayer extends AbstractPlayer {
         return role.testament(id, GameData.getGameInformation());
     }
 
-    public void skill() {
+    public int  skill(String info){
         checkResult = role.skill(id, GameData.getGameInformation());
         int checkId = checkResult.getCheckId();
         if (GameData.getPlayer(checkId).isGoodGuys()) {
@@ -55,6 +56,7 @@ public class ProphetPlayer extends AbstractPlayer {
             checkIsOk = false;
             log.info("查验的" + checkId + "号是狼人");
         }
+        return checkId;
     }
 
 }

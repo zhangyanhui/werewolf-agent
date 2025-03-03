@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 狼人角色
  * @Author JunjieM
  * @Date 2024/4/11
  */
@@ -43,11 +44,22 @@ public class WerewolfPlayer extends AbstractPlayer {
         return role.testament(id, GameData.getGameInformation());
     }
 
-    public KillResult skill(String teamStrategies) {
+//    public KillResult skill(String teamStrategies) {
+//        List<String> werewolfTeammates = GameData.getWerewolfPlayers().stream()
+//                .filter(p -> p.getId() != id)
+//                .map(p -> p.getId() + "号玩家")
+//                .collect(Collectors.toList());
+//        return role.skill(id, GameData.getGameInformation(), werewolfTeammates, teamStrategies);
+//    }
+
+    @Override
+    public int skill(String teamStrategies) {
         List<String> werewolfTeammates = GameData.getWerewolfPlayers().stream()
                 .filter(p -> p.getId() != id)
                 .map(p -> p.getId() + "号玩家")
                 .collect(Collectors.toList());
-        return role.skill(id, GameData.getGameInformation(), werewolfTeammates, teamStrategies);
+        KillResult relult = role.skill(id, GameData.getGameInformation(), werewolfTeammates, teamStrategies);
+        return relult.getKillId();
+
     }
 }

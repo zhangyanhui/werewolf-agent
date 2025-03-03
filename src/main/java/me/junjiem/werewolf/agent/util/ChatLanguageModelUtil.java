@@ -80,7 +80,7 @@ public class ChatLanguageModelUtil {
         Gson gson = new Gson();
         answer = answer.replaceAll(",\\s*//.*?\\n", ", \n") // 去除逗号后面的单行注释
                 .replaceAll(",(?=\\s*?[}\\]])", ""); // 去除尾随逗号
-        log.info("JSON: " + answer);
+//        log.info("JSON: " + answer);
         return gson.fromJson(answer, classOfT);
     }
 

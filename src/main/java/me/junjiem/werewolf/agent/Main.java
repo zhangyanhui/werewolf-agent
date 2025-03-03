@@ -33,6 +33,8 @@ public class Main {
     // 移除原有静态变量
     private static final Map<String, Map<String, Object>> llmConfigs;
 
+    private static final boolean humanPlayer ;
+
 
     static {
 
@@ -41,6 +43,7 @@ public class Main {
             InputStream in = Main.class.getClassLoader().getResourceAsStream("application-"+active+".yaml");
 
             Map<String, Object> config = YamlEnvLoader.loadWithEnv(in);
+            humanPlayer = (Boolean) config.get("human_player");
             // 新配置结构读取
             llmConfigs = (Map<String, Map<String, Object>>) config.get("llm_services");
         } catch (IOException e) {
@@ -67,13 +70,24 @@ public class Main {
         }
         // 洗牌，打乱角色顺序
         Collections.shuffle(roles);
+        //从1-9，随机选择一个作为人类玩家
+        int humanPlayerIndex = (int) (Math.random() * 9) + 1;
+
+        System.out.println(" humanPlayerIndex: " + humanPlayerIndex);
         // 分配角色给玩家
         for (int i = 0; i < roles.size(); i++) {
             int id = i + 1;
             String role = roles.get(i);
             log.info(id + "号玩家角色: " + role);
             gui.updateRoleName(id,role);
-            GameData.players.add(createPlayer(id, role));
+            AbstractPlayer player = createPlayer(id, role,humanPlayerIndex);
+            if (id == humanPlayerIndex) { // 包装为人类玩家
+                if(humanPlayer){
+                    System.out.println("人类玩家："+humanPlayer+":"+role);
+                    player = new HumanPlayer(player);
+                }
+            }
+            GameData.players.add(player);
             GameData.gameInformations.put(id, null);
         }
     }
@@ -110,7 +124,7 @@ public class Main {
                 Thread.sleep(500);
                 List<AbstractPlayer> prophetPlayers = GameData.getAliveProphetPlayers();
                 if (!prophetPlayers.isEmpty()) {
-                    ((ProphetPlayer) prophetPlayers.get(0)).skill();
+                    ((ProphetPlayer) prophetPlayers.get(0)).skill("");
                 }
                 System.out.println("++++++++预言家请闭眼++++++++");
                 TTSPlayer.playAudio("预言家请闭眼", "sambert-zhiqi-v1");
@@ -126,7 +140,7 @@ public class Main {
                         witchPlayer.save(killId);
                         killId = -1;
                     } else {
-                        int poisonId = witchPlayer.skill(killId);
+                        int poisonId = witchPlayer.skill(killId+"");
                         if (poisonId != -1) {
                             killIds.add(poisonId);
                         }
@@ -160,7 +174,7 @@ public class Main {
                 List<AbstractPlayer> alivePlayers = GameData.getAlivePlayers();
                 System.out.println("++++++++开始依次发言++++++++");
                 TTSPlayer.playAudio("开始依次发言", "sambert-zhiqi-v1");
-                List<String> speekList = Lists.newArrayList();
+//                List<String> speekList = Lists.newArrayList();
                 for (int j = 0; j < alivePlayers.size(); j++) {
                     AbstractPlayer player = alivePlayers.get(j);
                     String speak = player.speak(j);
@@ -249,6 +263,13 @@ public class Main {
     private static void testaments(int day, int killId) throws GameOverException, LineUnavailableException, InterruptedException {
         String testament = GameData.getPlayer(killId).testament();
         String message = killId + "号玩家 : " + testamentInformation(day, testament);
+        if(GameData.getPlayer(killId).getRoleName().equals("猎人")){
+            int shootId = GameData.getPlayer(killId).skill(testament);
+            if(shootId > 0 ){
+                GameData.playerDead(shootId);
+                testament = testament+"，我选择带走"+shootId+"号，理由如下："+ GameData.getPlayer(killId).getShootCause();
+            }
+        }
 
         GameData.addPlayerInformation(killId, testamentInformation(day, testament));
         System.out.println(message);
@@ -265,7 +286,7 @@ public class Main {
         return "第" + day + "天被投票出局，发表遗言: " + testament;
     }
 
-    private static AbstractPlayer createPlayer(int id, String roleName) {
+    private static AbstractPlayer createPlayer(int id, String roleName,int humanPlayerIndex) {
         // 获取角色对应配置（含默认配置）
         Map<String, Object> config = Optional.ofNullable(llmConfigs.get(roleName))
                 .orElse(llmConfigs.get("default"));
@@ -290,7 +311,12 @@ public class Main {
 
         String modelCompany = (String) config.get("model_company");
 
-        gui.updateServiceLogo(id, modelCompany,modelName);
+        if (id == humanPlayerIndex){
+            gui.updateServiceLogo(id, "人类玩家","" );
+        }else {
+            gui.updateServiceLogo(id, modelCompany,modelName);
+        }
+
         switch (roleName) {
             case "村民":
                 return new VillagerPlayer(id, roleName, service, apiKey, modelName, temperature,voice);
@@ -367,7 +393,9 @@ public class Main {
                 teamStrategies.add("team_strategy_" + (index++) + ":" + e.getKey().getId() + "号玩家想杀死的玩家是"
                         + e.getValue().getKillId() + "号，他的游戏策略如下：\n" + e.getValue().getMyStrategy());
             }
-            KillResult result = ((WerewolfPlayer) player).skill(String.join("\n", teamStrategies));
+
+            int killid = ((WerewolfPlayer) player).skill(String.join("\n", teamStrategies));
+            KillResult result = new KillResult(killid, player.getRoleName() + "的策略");
             map.put(player, result);
         }
         Map<Integer, Long> frequencyMap = map.values().stream()

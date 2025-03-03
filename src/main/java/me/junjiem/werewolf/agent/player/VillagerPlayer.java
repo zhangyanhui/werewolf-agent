@@ -40,4 +40,8 @@ public class VillagerPlayer extends AbstractPlayer {
         return role.testament(id, GameData.getGameInformation());
     }
 
+    @Override
+    public int skill(String info) {
+        return 0;
+    }
 }

@@ -39,7 +39,7 @@ public class YamlEnvLoader {
         Map<String, Object> config = loadWithEnv(input);
 
         // 打印完整配置结构
-        System.out.println("==== 解析后的配置结构 ====");
+//        System.out.println("==== 解析后的配置结构 ====");
         new Yaml().dump(config, new OutputStreamWriter(System.out, StandardCharsets.UTF_8));
         // 详细提取路径
         Map<?,?> llmServices = (Map<?,?>) config.get("spring");
@@ -48,7 +48,7 @@ public class YamlEnvLoader {
         String active = (String) profiles.get("active");
 
 
-        System.out.println("\nactive: " +active);
+//        System.out.println("\nactive: " +active);
         return active;
 
 

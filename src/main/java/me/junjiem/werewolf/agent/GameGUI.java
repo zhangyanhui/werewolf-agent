@@ -1,6 +1,7 @@
 package me.junjiem.werewolf.agent;
 
 import me.junjiem.werewolf.agent.util.GameData;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,7 +100,18 @@ public class GameGUI extends JFrame {
     // 新增更新Logo方法
     public void updateServiceLogo(int id, String service,String model) {
 //        String model_company = SERVICE_ICONS.getOrDefault(service.toLowerCase(), SERVICE_ICONS.get("default"));
-        String newTitle = "【"+service+"-"+model+"】"+playerLogos.get(id).getText();
+        String prifix ;
+        String newTitle;
+        if("人类玩家".equals(service)){
+            prifix = "【"+service+"】";
+            newTitle = prifix+playerLogos.get(id).getText();
+        }else {
+            prifix = "【"+service+"-"+model+"】";
+            newTitle = prifix+playerLogos.get(id).getText();
+        }
+
+
+//        String newTitle = prifix+playerLogos.get(id).getText();
         playerLogos.get(id).setText(newTitle);
 //        playerLogos.get(id).setToolTipText("模型服务：" + service);
     }

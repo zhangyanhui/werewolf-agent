@@ -53,7 +53,7 @@ public class GameData {
 
     public static List<AbstractPlayer> getAliveWerewolfPlayers() {
         return players.stream()
-                .filter(p -> p instanceof WerewolfPlayer)
+                .filter(p -> p.getRoleName().equals("狼人"))
                 .filter(AbstractPlayer::isAlive)
                 .collect(Collectors.toList());
     }
@@ -64,14 +64,14 @@ public class GameData {
 
     public static List<AbstractPlayer> getAliveProphetPlayers() {
         return players.stream()
-                .filter(p -> p instanceof ProphetPlayer)
+                .filter(p -> p.getRoleName().equals("预言家"))
                 .filter(AbstractPlayer::isAlive)
                 .collect(Collectors.toList());
     }
 
     public static List<AbstractPlayer> getAliveWitchPlayers() {
         return players.stream()
-                .filter(p -> p instanceof WitchPlayer)
+                .filter(p -> p.getRoleName().equals("女巫"))
                 .filter(AbstractPlayer::isAlive)
                 .collect(Collectors.toList());
     }
@@ -85,14 +85,14 @@ public class GameData {
 
     private static long aliveDeityCount() {
         return players.stream()
-                .filter(p -> p instanceof ProphetPlayer || p instanceof WitchPlayer || p instanceof HunterPlayer)
+                .filter(p -> p.getRoleName().equals("预言家") || p.getRoleName().equals("女巫") || p.getRoleName().equals("猎人") )
                 .filter(AbstractPlayer::isAlive)
                 .count();
     }
 
     private static long aliveVillagerCount() {
         return players.stream()
-                .filter(p -> p instanceof VillagerPlayer)
+                .filter(p -> p.getRoleName().equals("村民"))
                 .filter(AbstractPlayer::isAlive)
                 .count();
     }

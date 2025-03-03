@@ -15,7 +15,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 @Data
 public class ShotResult {
-    @SerializedName("is_kill")
+    @SerializedName("is_shot")
     private boolean isShot;
 
     @SerializedName("shot_id")
