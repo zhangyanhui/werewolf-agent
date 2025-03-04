@@ -13,8 +13,7 @@ import dev.langchain4j.model.zhipu.chat.ChatCompletionModel;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import me.junjiem.werewolf.agent.bean.SpeakResult;
-import me.junjiem.werewolf.agent.model.DeepSeekLanguageModel;
-import me.junjiem.werewolf.agent.model.QIanfanLanguageModel;
+import me.junjiem.werewolf.agent.model.*;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -58,6 +57,24 @@ public class ChatLanguageModelUtil {
                     .build();
         } else if ("qianfan".equalsIgnoreCase(service)) {
             return QIanfanLanguageModel.builder()
+                    .apiKey(apiKey)
+                    .modelName(modelName)
+                    .temperature(temperature)
+                    .build();
+        }  else if ("doubao".equalsIgnoreCase(service)) {
+            return DoubaoLanguageModel.builder()
+                    .apiKey(apiKey)
+                    .modelName(modelName)
+                    .temperature(temperature)
+                    .build();
+        }else if ("xunfeixinghuo".equalsIgnoreCase(service)) {
+            return XunfeiLanguageModel.builder()
+                    .apiKey(apiKey)
+                    .modelName(modelName)
+                    .temperature(temperature)
+                    .build();
+        } else if ("kimi".equalsIgnoreCase(service)) {
+            return KimiLanguageModel.builder()
                     .apiKey(apiKey)
                     .modelName(modelName)
                     .temperature(temperature)

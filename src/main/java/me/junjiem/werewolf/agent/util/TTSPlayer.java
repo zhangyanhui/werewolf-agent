@@ -22,7 +22,7 @@ public class TTSPlayer {
     static {
 
         try  {
-            String active = YamlEnvLoader.loadActiveConfig("config.yaml");
+            String active = YamlEnvLoader.loadActiveConfig();
             InputStream in = Main.class.getClassLoader().getResourceAsStream("application-"+active+".yaml");
             Map<String, Object> config = YamlEnvLoader.loadWithEnv(in);
             // 新配置结构读取

@@ -33,7 +33,7 @@ public class YamlEnvLoader {
 
         System.out.println("\nactive: " +active);
     }
-    public static String loadActiveConfig(String configPath) throws Exception {
+    public static String loadActiveConfig() throws Exception {
         InputStream input = YamlEnvLoader.class.getClassLoader()
                 .getResourceAsStream("application.yaml");
         Map<String, Object> config = loadWithEnv(input);

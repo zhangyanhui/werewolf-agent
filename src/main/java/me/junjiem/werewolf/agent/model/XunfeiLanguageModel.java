@@ -16,20 +16,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Builder
-public class QIanfanLanguageModel implements ChatLanguageModel {
+public class XunfeiLanguageModel implements ChatLanguageModel {
 
     private final String apiKey;
     private final String modelName;
     private final Double temperature;
-    private static final String API_URL = "https://qianfan.baidubce.com/v2/chat/completions";
-    public static void main(String[] args) {
-//        System.out.println(new DoubaoLanguageModel("sk-06e306e994a84064893afe35dcf77229", "ddoubao-1-5-pro-32k-250115", 0.7).generate(List.of(UserMessage.userMessage("你好"))).content());
-        UserMessage userMessage = new UserMessage("你好");
-        List list = Lists.newArrayList();
-        QIanfanLanguageModel QIanfanLanguageModel = new QIanfanLanguageModel("bce-v3/ALTAK-j4b5mmFEqraN9eFtH1jwb/9aaf395df40af42c0057a58ed11911080164d530","ERNIE-4.0-8K",0.7);
-        list.add(userMessage);
-        QIanfanLanguageModel.generate(list);
-    }
+    private static final String API_URL = "https://spark-api-open.xf-yun.com/v1/chat/completions";
+
+//    public static void main(String[] args) {
+////        System.out.println(new DoubaoLanguageModel("sk-06e306e994a84064893afe35dcf77229", "ddoubao-1-5-pro-32k-250115", 0.7).generate(List.of(UserMessage.userMessage("你好"))).content());
+//    UserMessage userMessage = new UserMessage("你好");
+//    List list = Lists.newArrayList();
+//        XunfeiLanguageModel XunfeiLanguageModel = new XunfeiLanguageModel("HOpgisHzycqDSssrFnva:APujOEECxFCXAuWWDolD","generalv3",0.7);
+//    list.add(userMessage);
+//        XunfeiLanguageModel.generate(list);
+//    }
     @Override
     public Response<AiMessage> generate(List<ChatMessage> messages) {
         try {
@@ -41,7 +42,7 @@ public class QIanfanLanguageModel implements ChatLanguageModel {
                     .body();
 
             JSONObject responseJson = JSONUtil.parseObj(responseBody);
-            System.out.println("qianfan-> "+responseJson.toString());
+            System.out.println("doubao-> "+responseJson.toString());
             String content = responseJson.getJSONArray("choices")
                     .getJSONObject(0)
                     .getJSONObject("message")
@@ -49,7 +50,7 @@ public class QIanfanLanguageModel implements ChatLanguageModel {
 
             return Response.from(AiMessage.from(content));
         } catch (Exception e) {
-            throw new RuntimeException("qianfan API调用失败", e);
+            throw new RuntimeException("doubao API调用失败", e);
         }
     }
 
