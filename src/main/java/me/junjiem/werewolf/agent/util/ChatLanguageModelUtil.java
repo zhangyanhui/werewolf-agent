@@ -1,10 +1,9 @@
 package me.junjiem.werewolf.agent.util;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.dashscope.QwenChatModel;
-import dev.langchain4j.model.dashscope.QwenModelName;
+
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModelName;
 
@@ -12,7 +11,7 @@ import dev.langchain4j.model.zhipu.ZhipuAiChatModel;
 import dev.langchain4j.model.zhipu.chat.ChatCompletionModel;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import me.junjiem.werewolf.agent.bean.SpeakResult;
+
 import me.junjiem.werewolf.agent.model.*;
 
 import java.util.Optional;
@@ -44,11 +43,11 @@ public class ChatLanguageModelUtil {
             Optional.ofNullable(temperature).ifPresent(builder::temperature);
             return builder.build();
         } else if ("dashscope".equalsIgnoreCase(service)) {
-            QwenChatModel.QwenChatModelBuilder builder = QwenChatModel.builder()
+            return QwenLanguageModel.builder()
                     .apiKey(apiKey)
-                    .modelName(Optional.ofNullable(modelName).orElse(QwenModelName.QWEN_TURBO));
-            Optional.ofNullable(temperature).ifPresent(t -> builder.temperature(t.floatValue()));
-            return builder.build();
+                    .modelName(modelName)
+                    .temperature(temperature)
+                    .build();
         }else if ("deepseek".equalsIgnoreCase(service)) {
             return DeepSeekLanguageModel.builder()
                     .apiKey(apiKey)

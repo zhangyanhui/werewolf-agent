@@ -117,34 +117,34 @@ public class Main {
                 System.out.println("==================== 第" + i + "天 ====================");
 
                 System.out.println("========== 天黑请闭眼 ==========");
-                TTSPlayer.playAudio("天黑请闭眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("天黑请闭眼", "longjielidou");
                 Thread.sleep(500);
                 System.out.println("++++++++狼人请睁眼++++++++");
-                TTSPlayer.playAudio("狼人请睁眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("狼人请睁眼", "longjielidou");
 //                Thread.sleep(500);
                 System.out.println(">>>>>>狼人请选择猎杀目标<<<<<<");
-                TTSPlayer.playAudio("狼人请选择猎杀目标", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("狼人请选择猎杀目标", "longjielidou");
 //                Thread.sleep(500);
                 int killId = collectiveKill(); // 狼人集体决定猎杀目标
 //                Thread.sleep(1000);
                 System.out.println("++++++++狼人请闭眼++++++++");
-                TTSPlayer.playAudio("狼人请闭眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("狼人请闭眼", "longjielidou");
 //                Thread.sleep(500); // 添加等待
                 System.out.println("++++++++预言家请睁眼++++++++");
-                TTSPlayer.playAudio("预言家请睁眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("预言家请睁眼", "longjielidou");
                 Thread.sleep(500);
                 System.out.println(">>>>>>预言家请选择查验目标<<<<<<");
-                TTSPlayer.playAudio("预言家请选择查验目标", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("预言家请选择查验目标", "longjielidou");
                 Thread.sleep(500);
                 List<AbstractPlayer> prophetPlayers = GameData.getAliveProphetPlayers();
                 if (!prophetPlayers.isEmpty()) {
                     ((ProphetPlayer) prophetPlayers.get(0)).skill("");
                 }
                 System.out.println("++++++++预言家请闭眼++++++++");
-                TTSPlayer.playAudio("预言家请闭眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("预言家请闭眼", "longjielidou");
                 Thread.sleep(500); // 添加等待
                 System.out.println("++++++++女巫请睁眼++++++++");
-                TTSPlayer.playAudio("女巫请睁眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("女巫请睁眼", "longjielidou");
                 List<AbstractPlayer> witchPlayers = GameData.getAliveWitchPlayers();
                 if (!witchPlayers.isEmpty()) {
                     WitchPlayer witchPlayer = (WitchPlayer) witchPlayers.get(0);
@@ -161,22 +161,22 @@ public class Main {
                     }
                 }
                 System.out.println("++++++++女巫请闭眼++++++++");
-                TTSPlayer.playAudio("女巫请闭眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("女巫请闭眼", "longjielidou");
                 Thread.sleep(500); // 添加等待
                 if (killId != -1) {
                     killIds.add(killId);
                 }
 
                 System.out.println("========== 天亮请睁眼 ==========");
-                TTSPlayer.playAudio("天亮请睁眼", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("天亮请睁眼", "longjielidou");
 //                Thread.sleep(100); // 添加等待
                 if (killIds.isEmpty()) {
                     System.out.println(">>>>>>昨晚是个平安夜<<<<<<");
-                    TTSPlayer.playAudio("昨晚是个平安夜", "sambert-zhiqi-v1");
+                    TTSPlayer.playAudio("昨晚是个平安夜", "longjielidou");
                 } else {
                     System.out.println(">>>>>>昨晚" + killIds + "号玩家死亡<<<<<<");
                     String info = "昨晚" + killIds + "号玩家死亡";
-                    TTSPlayer.playAudio(info, "sambert-zhiqi-v1");
+                    TTSPlayer.playAudio(info, "longjielidou");
 
                     for (int id : killIds) {
                         GameData.playerDead(id);
@@ -187,7 +187,7 @@ public class Main {
                 }
                 List<AbstractPlayer> alivePlayers = GameData.getAlivePlayers();
                 System.out.println("++++++++开始依次发言++++++++");
-                TTSPlayer.playAudio("开始依次发言", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("开始依次发言", "longjielidou");
 //                List<String> speekList = Lists.newArrayList();
                 for (int j = 0; j < alivePlayers.size(); j++) {
                     AbstractPlayer player = alivePlayers.get(j);
@@ -218,7 +218,7 @@ public class Main {
                     System.out.println("有音频正在播放，请稍候...");
                     audioExecutor.awaitTermination(30, TimeUnit.SECONDS);
                 }
-                TTSPlayer.playAudio("开始进行投票", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio("开始进行投票", "longjielidou");
 
                 int voteId = collectiveVote(i, 1, alivePlayers,
                         alivePlayers.stream().map(AbstractPlayer::getId).collect(Collectors.toList()), voteMap);
@@ -228,13 +228,13 @@ public class Main {
                 GameData.playerDead(voteId);
                 refreshPlayerPanels(); // 添加界面刷新
                 System.out.println(">>>>>>" + voteId + "号玩家请发表遗言<<<<<<");
-                TTSPlayer.playAudio(voteId + "号玩家请发表遗言", "sambert-zhiqi-v1");
+                TTSPlayer.playAudio(voteId + "号玩家请发表遗言", "longjielidou");
                 testaments(i, voteId);
 
             }
         } catch (GameOverException e) {
             System.out.println("-------------------结束游戏-------------------");
-            TTSPlayer.playAudio("结束游戏" + "获胜阵营：" + (GameData.goodGuysWin ? "好人阵营" : "狼人阵营"), "sambert-zhiqi-v1");
+            TTSPlayer.playAudio("结束游戏" + "获胜阵营：" + (GameData.goodGuysWin ? "好人阵营" : "狼人阵营"), "longjielidou");
 
             System.out.println("---------------------------------------------");
             System.out.println("|              获胜阵营：" + (GameData.goodGuysWin ? "好人" : "坏人") + "阵营               |");

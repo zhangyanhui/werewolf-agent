@@ -36,11 +36,11 @@
             <artifactId>langchain4j</artifactId>
             <version>${langchain4j.vserion}</version>
         </dependency>
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-dashscope</artifactId>
-            <version>${langchain4j.vserion}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>dev.langchain4j</groupId>-->
+<!--            <artifactId>langchain4j-dashscope</artifactId>-->
+<!--            <version>${langchain4j.vserion}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-zhipu-ai</artifactId>
@@ -84,7 +84,7 @@
             <groupId>com.alibaba</groupId>
             <artifactId>dashscope-sdk-java</artifactId>
             <!-- 请将 'the-latest-version' 替换为最新版本号：https://mvnrepository.com/artifact/com.alibaba/dashscope-sdk-java -->
-            <version>2.10.1</version>
+            <version>2.18.3</version>
         </dependency>
             <dependency>
                 <groupId>org.java-websocket</groupId>

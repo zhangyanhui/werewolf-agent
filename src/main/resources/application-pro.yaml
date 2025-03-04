@@ -1,58 +1,71 @@
-ttskey: 阿里云的key ，和dashscope处配置的是一个key
+ttskey: xxxx
 #添加人类玩家开关
-human_player: true
+human_player: false
 # 新结构：
 llm_services:
-  预言家:
+  kimi:
+    service: kimi
+    api_key: xxxxx
+    model_name: moonshot-v1-8k
+    temperature: 0.7
+    voice: longxiaochun
+    model_company: 月之暗面
+  #    service: zhipuai
+  #    api_key: xxxxx
+  #    model_name: glm-4-plus
+  #    temperature: 0.7
+  #    voice: sambert-zhinan-v1
+  #    model_company: 智谱清言
+  zhipuai:
+    #    service: qianfan
+    #    api_key: xxxxx
+    #    model_name: deepseek-r1
+    #    temperature: 0.7
+    #    voice: sambert-zhiwei-v1
+    #    model_company: 百度千帆
     service: zhipuai
-    api_key: xxxxxxx
+    api_key: xxxx
     model_name: glm-4-plus
     temperature: 0.7
-    voice:
-      - sambert-zhinan-v1
+    voice: longxiaoxia
     model_company: 智谱清言
 
-  女巫:
-    service: zhipuai
-    api_key: xxxxxxx
-    model_name: glm-4-plus
+  doubao:
+    service: doubao
+    api_key: xxxxx
+    model_name: doubao-1-5-pro-32k-250115
     temperature: 0.7
-    voice:
-      - sambert-zhiqi-v1
-    model_company: 智谱清言
-  狼人:
+    voice: longxiaobai
+    model_company: 字节跳动
+  deepseek:
     service: deepseek
-    api_key: xxxx
+    api_key: xxxxx
     model_name: deepseek-chat
     temperature: 0.7
-    voice:
-      - sambert-zhichu-v1
-      - sambert-zhide-v1
-      - sambert-zhijia-v1
+    voice: longlaotie
+
     model_company: 深度求索
-  猎人:
+  dashscope:
     service: dashscope
-    api_key: xxxxxx
+    api_key: xxxxx
     model_name: qwen-turbo
     temperature: 0.7
-    voice:
-      - sambert-zhixiang-v1
-    model_company: 阿里云百炼
-  村民:
-    service: dashscope
-    api_key: xxxxxxx
-    model_name: qwen-turbo
+    voice: longshuo
+
+    model_company: 阿里千问
+  xunfeixinghuo:
+    service: xunfeixinghuo
+    api_key: xxxxx
+    model_name: generalv3
     temperature: 0.7
-    voice:
-      - sambert-zhiwei-v1
-      - sambert-zhiming-v1
-      - sambert-zhimo-v1
-    model_company: 阿里云百炼
+    voice: longjing
+
+    model_company: 讯飞星火
   # 其他角色默认配置
   default:
-    service: dashscope
-    api_key: sxxxxxx
-    model_name: qwen-turbo
+    service: deepseek
+    api_key: xxxxx
+    model_name: deepseek-chat
     temperature: 0.7
-    voice: sambert-pingmin
-    model_company: 阿里云百炼
+    voice: longmiao
+    model_company: 深度求索

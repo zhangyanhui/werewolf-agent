@@ -11,6 +11,7 @@ import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.output.Response;
 import lombok.Builder;
+import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,14 +24,8 @@ public class DoubaoLanguageModel implements ChatLanguageModel {
     private final Double temperature;
     private static final String API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions";
 
-    public static void main(String[] args) {
-//        System.out.println(new DoubaoLanguageModel("sk-06e306e994a84064893afe35dcf77229", "ddoubao-1-5-pro-32k-250115", 0.7).generate(List.of(UserMessage.userMessage("你好"))).content());
-    UserMessage userMessage = new UserMessage("你好");
-    List list = Lists.newArrayList();
-        DoubaoLanguageModel DoubaoLanguageModel = new DoubaoLanguageModel("b6c15ee8-8825-4e55-9c95-4636bb76936a","doubao-1-5-pro-32k-250115",0.7);
-    list.add(userMessage);
-        DoubaoLanguageModel.generate(list);
-    }
+
+    @SneakyThrows
     @Override
     public Response<AiMessage> generate(List<ChatMessage> messages) {
         try {
@@ -50,7 +45,9 @@ public class DoubaoLanguageModel implements ChatLanguageModel {
 
             return Response.from(AiMessage.from(content));
         } catch (Exception e) {
-            throw new RuntimeException("doubao API调用失败", e);
+//            throw new RuntimeException("doubao API调用失败", e);
+            Thread.sleep(500);
+            return generate(messages);
         }
     }
 

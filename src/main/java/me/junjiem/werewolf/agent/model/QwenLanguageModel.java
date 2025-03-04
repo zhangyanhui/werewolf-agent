@@ -16,20 +16,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Builder
-public class KimiLanguageModel implements ChatLanguageModel {
+public class QwenLanguageModel implements ChatLanguageModel {
 
     private final String apiKey;
     private final String modelName;
     private final Double temperature;
-    private static final String API_URL = "https://api.moonshot.cn/v1/chat/completions";
+    private static final String API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions";
 
     public static void main(String[] args) {
 //        System.out.println(new DoubaoLanguageModel("sk-06e306e994a84064893afe35dcf77229", "ddoubao-1-5-pro-32k-250115", 0.7).generate(List.of(UserMessage.userMessage("你好"))).content());
-    UserMessage userMessage = new UserMessage("你好");
-    List list = Lists.newArrayList();
-        KimiLanguageModel KimiLanguageModel = new KimiLanguageModel("sk-OoKr8CH4wxIkxalvu0pSMCQfxOlKbIERIdMjP2baiScQfVNQ","moonshot-v1-8k",0.7);
-    list.add(userMessage);
-        KimiLanguageModel.generate(list);
+        UserMessage userMessage = new UserMessage("你好");
+        List list = Lists.newArrayList();
+        QwenLanguageModel QwenLanguageModel = new QwenLanguageModel("sk-06e306e994a84064893afe35dcf77229", "qwen-turbo", 0.7);
+        list.add(userMessage);
+        QwenLanguageModel.generate(list);
     }
     @Override
     public Response<AiMessage> generate(List<ChatMessage> messages) {
@@ -41,8 +41,9 @@ public class KimiLanguageModel implements ChatLanguageModel {
                     .execute()
                     .body();
 
+            System.out.println("-->" + responseBody);
             JSONObject responseJson = JSONUtil.parseObj(responseBody);
-            System.out.println("kimi-> "+responseJson.toString());
+            System.out.println("qwen-> "+responseJson.toString());
             String content = responseJson.getJSONArray("choices")
                     .getJSONObject(0)
                     .getJSONObject("message")
@@ -50,8 +51,8 @@ public class KimiLanguageModel implements ChatLanguageModel {
 
             return Response.from(AiMessage.from(content));
         } catch (Exception e) {
+            e.getStackTrace();
             throw new RuntimeException("doubao API调用失败", e);
-
         }
     }
 
