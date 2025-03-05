@@ -279,10 +279,10 @@ public class Main {
     private static void testaments(int day, int killId) throws GameOverException, LineUnavailableException, InterruptedException {
         String testament = GameData.getPlayer(killId).testament();
         String message = killId + "号玩家 : " + testamentInformation(day, testament);
+        int shootId =0;
         if (GameData.getPlayer(killId).getRoleName().equals("猎人")) {
-            int shootId = GameData.getPlayer(killId).skill(testament);
+             shootId = GameData.getPlayer(killId).skill(testament);
             if (shootId > 0) {
-                GameData.playerDead(shootId);
                 testament = testament + "，我选择带走" + shootId + "号，理由如下：" + GameData.getPlayer(killId).getShootCause();
             }
         }
@@ -291,6 +291,7 @@ public class Main {
         System.out.println(message);
         gui.updateSpeech(killId, message); // 替换原来的appendMessage
         TTSPlayer.playAudio(message, GameData.getPlayer(killId).getVoice());
+        GameData.playerDead(shootId);
         refreshPlayerPanels();
     }
 
@@ -303,17 +304,9 @@ public class Main {
     }
 
     private static AbstractPlayer createPlayer(int id, String roleName, int humanPlayerIndex) {
-        // 获取角色对应配置（含默认配置）
-//        Map<String, Object> config = Optional.ofNullable(llmConfigs.get(roleName))
-//                .orElse(llmConfigs.get("default"));
-//        Map<String, Object> config = llmNameList.get(id-1);
+
         Map<String, Object> config = llmConfigs.get(llmNameList.get(id-1));
         String voice = (String) config.get("voice");
-//        String voice = "";
-//        if (voices instanceof String) {
-//            int roleCount = GameData.getPlayerCountByRole(roleName);
-//            voice = voices.get(roleCount);
-//        }
 
         if (voice.isEmpty()) {
             throw new RuntimeException("voice is empty");

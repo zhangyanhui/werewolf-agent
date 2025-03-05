@@ -3,6 +3,7 @@ package me.junjiem.werewolf.agent.player;
 import me.junjiem.werewolf.agent.GameOverException;
 import me.junjiem.werewolf.agent.util.GameData;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,42 +23,48 @@ public class HumanPlayer extends AbstractPlayer {
 
     @Override
     public String speak(int index) {
-        //通过键盘输入，并返回
-        System.out.printf("\n[人类玩家%d号] 请输入你的发言内容：", id);
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-
+        String input = JOptionPane.showInputDialog(
+                null,
+                String.format("人类玩家%d号 请输入发言内容：", id),
+                "玩家发言",
+                JOptionPane.QUESTION_MESSAGE
+        );
+        return input != null ? input : "";
     }
 
     @Override
     public int vote(List<Integer> votingIds) {
-        //通过键盘输入，并返回
-        System.out.printf("\n[人类玩家%d号] 请输入你的投票内容：", id);
-
-        Scanner scanner = new Scanner(System.in);
-        return Integer.parseInt(scanner.nextLine());
+        String input = JOptionPane.showInputDialog(
+                null,
+                String.format("人类玩家%d号 请输入投票号码：", id),
+                "玩家投票",
+                JOptionPane.QUESTION_MESSAGE
+        );
+        return input != null ? Integer.parseInt(input) : -1;
     }
 
     @Override
     public String testament() throws GameOverException {
-        //通过键盘输入，并返回
-        System.out.printf("\n[人类玩家%d号] 请输入你的发言内容：", id);
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-
+        String input = JOptionPane.showInputDialog(
+                null,
+                String.format("人类玩家%d号 请输入遗言内容：", id),
+                "玩家遗言",
+                JOptionPane.QUESTION_MESSAGE
+        );
+        return input != null ? input : "";
     }
-
 
     @Override
     public int skill(String info) {
-        if(hasSkill()){
-            System.out.printf("\n[人类玩家%d号] 请输入你的技能内容：", id);
-            Scanner scanner = new Scanner(System.in);
-            return Integer.parseInt(scanner.nextLine());
-
-        }else {
-            return -1;
+        if (hasSkill()) {
+            String input = JOptionPane.showInputDialog(
+                    null,
+                    String.format("人类玩家%d号 请输入技能目标：", id),
+                    "技能使用",
+                    JOptionPane.QUESTION_MESSAGE
+            );
+            return input != null ? Integer.parseInt(input) : -1;
         }
-
+        return -1;
     }
 }

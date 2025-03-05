@@ -86,7 +86,15 @@ java -cp target/classes:target/dependency/* me.junjiem.werewolf.agent.Main
 ## 联系我们
 如果你在使用过程中遇到任何问题或有任何建议，欢迎通过以下方式联系我们：
 
-- 邮箱：[你的邮箱地址]
+- 邮箱：[yohannzhang@qq.com]
+- 公众号：[诗在盛唐]
+  ![img.png](/assets/images/img.png)
+- 小程序：[诗在盛唐]
+  ![img_2.png](/assets/images/img_2.png)
+- 小程序：[不用上班倒计时]
+  ![img_3.png](/assets/images/img_3.png)
+- 小程序：[模拟手机来电]
+  ![img_5.png](/assets/images/img_5.png)
 - 问题跟踪：[项目的Issue页面链接]
 ```
 
