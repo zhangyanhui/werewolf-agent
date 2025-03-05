@@ -15,7 +15,7 @@
     - OpenAI的apiKey
 
 ### 示例配置
-以下是 `config.yaml` 文件的示例，可按需修改：
+以下是 `application.yaml` 文件的示例，可按需修改：
 ```yaml
 llm:
   service: "dashscope"  # 可选择 dashscope、zhipuai、openai
@@ -39,7 +39,7 @@ werewolf-agent/
 │   │   └── resources/  # 资源文件目录
 │   └── test/
 │       └── java/  # 测试代码目录
-├── config.yaml  # 配置文件
+├── application.yaml  # 配置文件
 ├── pom.xml  # Maven项目配置文件
 └── README.md  # 项目说明文档
 ```
@@ -52,10 +52,10 @@ werewolf-agent/
 ## 六、使用方法
 1. **克隆项目**：将项目克隆到本地
 ```bash
-git clone <项目仓库地址>
+git clone https://github.com/zhangyanhui/werewolf-agent.git
 cd werewolf-agent
 ```
-2. **配置API密钥**：按照上述配置步骤，修改 `config.yaml` 文件。
+2. **配置API密钥**：按照上述配置步骤，修改 `application.yaml` 文件。
 3. **构建项目**：使用Maven构建项目
 ```bash
 mvn clean install
