@@ -80,9 +80,10 @@ java -cp target/classes:target/dependency/* me.junjiem.werewolf.agent.Main
 ## 九、许可证
 本项目采用 [许可证名称] 许可证，详细信息请查看 `LICENSE` 文件。
 
-## 十、联系我们
+
 如果你在使用过程中遇到问题或有任何建议，欢迎通过以下方式联系我们：
 - 邮箱：[yohannzhang@qq.com]
+## 作者的其他项目，欢迎体验
 - 公众号：[诗在盛唐]
   ![img.png](/assets/images/img.png)
 - 小程序：[诗在盛唐]
